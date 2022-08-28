@@ -41,7 +41,7 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 
-streamlit.header("Fruityvice Fruit Advice!")
+streamlit.header("View Our Fruit List - Add Your Favorites!")
 try:
     fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
     if not fruit_choice:
@@ -56,10 +56,11 @@ streamlit.write('The user entered ', fruit_choice)
 
 
 # don't run anythying
-if streamlit.button('Get Fruit Load List'):
+if streamlit.button('Get Fruit List'):
     snowflake_conn = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
     streamlit.dataframe(my_data_rows)
+    snowflake_conn.close()
 
 add_my_fruit = streamlit.text_input("What fruit would you like to add?")
 if streamlit.button('Add a Fruit to the List'):
