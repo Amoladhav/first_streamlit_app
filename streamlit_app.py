@@ -19,8 +19,8 @@ def get_fruityvice_data(this_fruit_choice):
         fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
         return fruityvice_normalized
 
-def get_fruit_load_list(snowflake_conn):
-    With snowflake_conn.cursor() as my_cur:
+def get_fruit_load_list():
+    with snowflake_conn.cursor() as my_cur:
         my_cur.execute("SELECT * FROM fruit_load_list")
         return my_cur.fetchall()
 
@@ -52,7 +52,7 @@ streamlit.write('The user entered ', fruit_choice)
 # don't run anythying
 if streamlit.button('Get Fruit Load List'):
     snowflake_conn = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-    my_data_rows = get_fruit_load_list(**snowflake_conn)
+    my_data_rows = get_fruit_load_list()
     streamlit.dataframe(my_data_rows)
 
 # fruit2_choice = streamlit.text_input("What fruit would you like to add?", 'Kiwi')
